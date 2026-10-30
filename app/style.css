@@ -1,0 +1,120 @@
+/* mailforen Web Analyzer — self-contained styles, Material indigo/cyan palette */
+:root {
+  --bg: #f5f7fb;
+  --panel: #ffffff;
+  --text: #1c2333;
+  --muted: #5f6b85;
+  --border: #dde3f0;
+  --primary: #3f51b5;
+  --primary-soft: #e8eaf6;
+  --accent: #00bcd4;
+  --pass: #2e7d32;
+  --pass-bg: #e6f4ea;
+  --warn: #b26a00;
+  --warn-bg: #fff4e0;
+  --fail: #c62828;
+  --fail-bg: #fdeaea;
+  --info: #1565c0;
+  --info-bg: #e7f1fb;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #10141f;
+    --panel: #1a2032;
+    --text: #e4e9f5;
+    --muted: #9aa6c3;
+    --border: #2a3247;
+    --primary: #7986cb;
+    --primary-soft: #232b45;
+    --pass: #7ddc8e; --pass-bg: #17301d;
+    --warn: #ffca7a; --warn-bg: #33270f;
+    --fail: #ff8a80; --fail-bg: #3a1a1a;
+    --info: #82b1ff; --info-bg: #16233a;
+  }
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: 'Roboto', -apple-system, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+.app-header {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #fff;
+  padding: 2rem 1.25rem 1.5rem;
+}
+.app-header h1 { margin: 0 0 .35rem; font-size: 1.6rem; font-weight: 500; }
+.brand { font-weight: 700; letter-spacing: .02em; }
+.tagline { margin: 0; max-width: 720px; opacity: .92; font-size: .92rem; }
+.back {
+  display: inline-block; margin-bottom: .8rem;
+  color: #fff; text-decoration: none; font-size: .88rem;
+  opacity: .9; border: 1px solid rgba(255,255,255,.4);
+  padding: .18rem .7rem; border-radius: 999px;
+}
+.back:hover { background: rgba(255,255,255,.12); }
+
+main { max-width: 880px; margin: 0 auto; padding: 1.25rem; }
+.panel {
+  background: var(--panel); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1rem; box-shadow: 0 1px 4px rgba(16,24,40,.06);
+  margin-bottom: 1.25rem;
+}
+.target-form { display: flex; gap: .6rem; }
+#target-input {
+  flex: 1; min-width: 0;
+  padding: .65rem .8rem; font-size: 1rem;
+  border: 1px solid var(--border); border-radius: 8px;
+  background: var(--bg); color: var(--text);
+}
+#target-input:focus { outline: 2px solid var(--accent); border-color: transparent; }
+.btn {
+  border: none; cursor: pointer; font-size: .95rem;
+  padding: .65rem 1.1rem; border-radius: 8px;
+  transition: filter .15s ease;
+}
+.btn:hover { filter: brightness(1.08); }
+.btn.primary { background: var(--primary); color: #fff; font-weight: 600; }
+.btn.subtle {
+  background: var(--primary-soft); color: var(--primary);
+  font-weight: 500; display: inline-block;
+}
+.raw-section { display: flex; gap: .6rem; margin-top: .7rem; align-items: center; flex-wrap: wrap; }
+#raw-input {
+  width: 100%; margin-top: .7rem;
+  padding: .6rem .7rem; font-family: 'JetBrains Mono', 'Fira Mono', Consolas, monospace;
+  font-size: .82rem; border: 1px solid var(--border); border-radius: 8px;
+  background: var(--bg); color: var(--text); resize: vertical;
+}
+#raw-input:focus { outline: 2px solid var(--accent); border-color: transparent; }
+
+.card {
+  background: var(--panel); border: 1px solid var(--border);
+  border-radius: 10px; padding: .8rem .95rem; margin-bottom: .7rem;
+}
+.card-head { display: flex; align-items: center; gap: .6rem; }
+.card-title { font-weight: 600; }
+.card-detail { color: var(--muted); font-size: .9rem; margin-top: .15rem; word-break: break-word; }
+.badge {
+  font-size: .68rem; font-weight: 700; letter-spacing: .05em;
+  padding: .18rem .55rem; border-radius: 999px; white-space: nowrap;
+}
+.s-pass { color: var(--pass); background: var(--pass-bg); }
+.s-warn { color: var(--warn); background: var(--warn-bg); }
+.s-fail { color: var(--fail); background: var(--fail-bg); }
+.s-info { color: var(--info); background: var(--info-bg); }
+.evidence {
+  margin: .5rem 0 0; padding-left: 1.1rem;
+  font-family: 'JetBrains Mono', 'Fira Mono', Consolas, monospace;
+  font-size: .78rem; color: var(--muted); word-break: break-all;
+}
+.evidence li { margin: .15rem 0; }
+
+.app-footer { color: var(--muted); font-size: .8rem; text-align: center; padding: 1rem 0 2rem; }
+@media (max-width: 560px) {
+  .target-form { flex-direction: column; }
+  .app-header h1 { font-size: 1.3rem; }
+}

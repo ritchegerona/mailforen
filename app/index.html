@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mailforen Web Analyzer</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="app-header">
+  <a class="back" href="../index.html">&larr; Documentation</a>
+  <h1><span class="brand">mailforen</span> Web Analyzer</h1>
+  <p class="tagline">Client-side OSINT for emails, domains, URLs and raw messages. Nothing you analyze is sent to any server of ours &mdash; lookups go directly from your browser to public resolvers (dns.google / Cloudflare DoH) and crt.sh.</p>
+</header>
+
+<main>
+  <section class="panel">
+    <form id="target-form" class="target-form" onsubmit="return false;">
+      <input type="text" id="target-input" placeholder="Enter an email address, domain, or URL &mdash; e.g. support@paypa1.com, example.com, https://bit.ly/xyz" autocomplete="off" spellcheck="false">
+      <button type="button" id="analyze-btn" class="btn primary">Analyze</button>
+    </form>
+    <div class="raw-section">
+      <label for="eml-file" class="btn subtle">Upload .eml / raw message file</label>
+      <input type="file" id="eml-file" accept=".eml,.txt,.msg,text/plain" hidden>
+      <button type="button" id="raw-btn" class="btn subtle">Analyze pasted headers</button>
+    </div>
+    <textarea id="raw-input" rows="6" placeholder="&hellip;or paste raw email headers / full message here (Received, Authentication-Results, From, Reply-To, Return-Path&hellip;) and press &lsquo;Analyze pasted headers&rsquo;"></textarea>
+  </section>
+
+  <section id="results" aria-live="polite">
+    <div class="card"><div class="card-detail">Enter a target above. Checks: DNS (MX/A/TXT), SPF & DMARC policy, DNSSEC, Certificate Transparency (crt.sh), disposable & typo-squat detection, URL heuristics, Received-chain and Authentication-Results parsing.</div></div>
+  </section>
+
+  <footer class="app-footer">
+    <p>mailforen &mdash; OSINT toolkit for email forensics. This analyzer is 100% client-side JavaScript; no target data reaches this site&rsquo;s servers.</p>
+  </footer>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
