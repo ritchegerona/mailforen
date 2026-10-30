@@ -1,0 +1,166 @@
+Metadata-Version: 2.4
+Name: mailforen
+Version: 0.1.0
+Summary: Advanced OSINT toolkit for email forensics and digital investigations
+Author: mailforen contributors
+License: MIT
+Keywords: osint,forensics,email,phishing,dfir,security
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Information Technology
+Classifier: Topic :: Security
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: typer[all]>=0.9.0
+Requires-Dist: rich>=13.7.0
+Requires-Dist: httpx[http2]>=0.25.0
+Requires-Dist: dnspython>=2.4.0
+Requires-Dist: pydantic>=2.5.0
+Requires-Dist: pydantic-settings>=2.1.0
+Requires-Dist: jinja2>=3.1.0
+Requires-Dist: python-dateutil>=2.8.0
+Requires-Dist: publicsuffix2>=2.20191221
+Requires-Dist: tldextract>=5.1.0
+Requires-Dist: eml-parser>=1.17.0
+Requires-Dist: pyspf>=2.0.14
+Requires-Dist: checkdmarc>=4.7.0
+Requires-Dist: exifread>=3.0.0
+Requires-Dist: python-magic>=0.4.27
+Requires-Dist: pdfkit>=1.0.0
+Requires-Dist: PySide6>=6.8.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.4.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.21.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.1.0; extra == "dev"
+Requires-Dist: black>=23.11.0; extra == "dev"
+Requires-Dist: ruff>=0.1.6; extra == "dev"
+Requires-Dist: mypy>=1.7.0; extra == "dev"
+Dynamic: license-file
+
+# mailforen
+
+Advanced OSINT toolkit for email forensics and digital investigations.
+
+## ⚠️ Disclaimer
+
+**For authorized use only.** This tool is intended for legitimate security investigations, phishing incident response, and defensive OSINT. Users must have explicit permission to investigate targets. Use of this tool for unauthorized reconnaissance, harassment, or malicious purposes is strictly prohibited and may be illegal in your jurisdiction.
+
+## Features
+
+- **Email Forensics**: Parse `.eml` headers, analyze authentication (SPF/DMARC/MX), check MX records, trace Received chains
+- **Domain & IP Intelligence**: DNS lookups, ASN/org lookup via public IP APIs, Certificate Transparency search
+- **URL Tracing**: Safe redirect chain analysis
+- **Username Pivoting**: Correlate identities across public sources
+- **File Metadata**: Extract EXIF data from images/documents
+- **Case Management**: Organize investigations with SQLite-backed case tracking
+- **Evidence Export**: Generate reports in Markdown, HTML, PDF, and JSON/SIEM formats
+- **Passive-First**: All checks are passive by default; active checks require `--unsafe` flag with explicit confirmation
+
+🚧 **Planned**: DKIM selector lookups, WHOIS/RDAP queries, automated phishing risk scoring — see [CONTRIBUTING.md](CONTRIBUTING.md) if you'd like to help build these.
+
+## Installation
+
+### From PyPI (Recommended)
+
+```bash
+pip install mailforen
+```
+
+### From Source (Latest Development)
+
+```bash
+git clone https://github.com/your-org/mailforen.git
+cd mailforen
+pip install -e .
+```
+
+### With Development Dependencies
+
+```bash
+pip install -e ".[dev]"
+```
+
+### System Dependencies
+
+Some features require system packages:
+
+**PDF Report Generation** (requires `wkhtmltopdf`):
+- **Ubuntu/Debian**: `sudo apt-get install wkhtmltopdf`
+- **macOS**: `brew install wkhtmltopdf`
+- **Arch**: `sudo pacman -S wkhtmltopdf`
+- **Fedora**: `sudo dnf install wkhtmltopdf`
+
+**GUI Application** (requires Qt6):
+- **Ubuntu/Debian**: `sudo apt-get install python3-pyside6.qtcore python3-pyside6.qtgui python3-pyside6.qtwidgets python3-pyside6.qtwebengine`
+- **macOS**: `brew install pyside6` (or use pip, included in dependencies)
+- **Arch**: `sudo pacman -S pyside6`
+
+### Virtual Environment (Recommended)
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install mailforen
+```
+
+### Verify Installation
+
+```bash
+mailforen --help
+mailforen-gui --help    # if GUI dependencies installed
+```
+
+## Quick Start
+
+```bash
+# Create a case
+mailforen case new "Phishing-Incident-001" --target suspicious.example.com
+
+# Analyze email headers
+mailforen email headers suspicious.eml
+
+# Check email authentication
+mailforen email auth example.com
+
+# Domain intelligence
+mailforen domain intel example.com
+
+# IP intelligence
+mailforen ip intel 1.1.1.1
+
+# Certificate transparency search
+mailforen ct search example.com
+
+# URL redirect trace
+mailforen url trace https://bit.ly/example
+
+# Generate report
+mailforen report generate --case-id 1 --format html
+```
+
+## Safety
+
+- **Passive by default**: No direct connections to target mail servers without `--unsafe`
+- **Rate limiting**: Built-in rate limits to avoid overwhelming APIs
+- **Evidence logging**: All requests and results are timestamped
+- **API key optional**: Works with free public sources; keys only needed for enriched data
+- **Configurable timeouts**: Prevents hanging on slow requests
+
+## Development
+
+```bash
+python3 -m venv .venv && source .venv/bin/activate
+pip install -e ".[dev]"
+
+pytest -q                    # hermetic test suite (no network access)
+ruff check mailforen tests   # lint
+```
+
+CI runs the lint and tests on Python 3.11–3.13. See [CONTRIBUTING.md](CONTRIBUTING.md)
+for the project layout, architecture notes, and good first issues.
+
+## License
+
+MIT

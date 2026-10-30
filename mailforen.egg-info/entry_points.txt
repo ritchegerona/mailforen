@@ -1,0 +1,3 @@
+[console_scripts]
+mailforen = mailforen.cli:app
+mailforen-gui = mailforen.gui.app:main
